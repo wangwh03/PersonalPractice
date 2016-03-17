@@ -41,6 +41,10 @@ public final class TreeUtil {
     }
     
     public static void printTreeInLevel(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         
         queue.offer(head);
