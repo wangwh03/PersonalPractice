@@ -4,51 +4,60 @@ import java.util.HashSet;
 
 // Give an 2-day array of chars, and a word, find if a word exists.
 // See default package for another harder interview question with honeycomb instead of matrix/2d-array
-// BFS, check if there is a path starting from each point.  Remember to check if char is already used in current search path
+// BFS, check if there is a path starting from each point. 
+// Remember when to add current char into visited list, when to remove it if it does not work out, and create new empty list
+// for visited
+
 public class WordSeacher {
 
     public static void main(String[] args) {
         WordSeacher wordSeacher = new WordSeacher();
-//        char[][] test1 = null;
-//        System.out.println(wordSeacher.exist(test1, "a"));
-//        
-//        char[][] test2 = {};
-//        System.out.println(wordSeacher.exist(test2, "a"));
-//
-//        char[][] test3 = {{}};
-//        System.out.println(wordSeacher.exist(test3, "a"));
-//
-//        char[][] test4 = {{'a'}};
-//        System.out.println(wordSeacher.exist(test4, "a"));
-//
-//        char[][] test5 = {{'a'}};
-//        System.out.println(wordSeacher.exist(test5, ""));
-//        
-//        char[][] test6 = {{'a'}};
-//        System.out.println(wordSeacher.exist(test6, "abc"));
-//
-//        char[][] test7 = {{'a'}, {'b'}, {'c'}};
-//        System.out.println(wordSeacher.exist(test7, "abc"));
-//
-//        char[][] test8 = {{'a', 'b', 'c'}};
-//        System.out.println(wordSeacher.exist(test8, "abcba"));
-//        
-//        char[][] test9 = {{'a', 'b', 'c', 'e'},
-//                        {'s', 'f', 'c', 's'},
-//                        {'a', 'd', 'e', 'e'}};
-//        System.out.println(wordSeacher.exist(test9, "abcced"));
-//        System.out.println(wordSeacher.exist(test9, "see"));
-//        System.out.println(wordSeacher.exist(test9, "abcb"));
+        char[][] test1 = null;
+        System.out.println(wordSeacher.exist(test1, "a"));
         
-//        char[][] test10 = {{'a', 'b', 'c', 'e'},
-//                        {'s', 'f', 'e', 's'},
-//                        {'a', 'd', 'e', 'e'}};
-//        System.out.println(wordSeacher.exist(test10, "abceseeefs")); // wrong answer
+        char[][] test2 = {};
+        System.out.println(wordSeacher.exist(test2, "a"));
+
+        char[][] test3 = {{}};
+        System.out.println(wordSeacher.exist(test3, "a"));
+
+        System.out.println();
         
-        char[][] test10 = {{'c', 'e'},
+        char[][] test4 = {{'a'}};
+        System.out.println(wordSeacher.exist(test4, "a"));
+
+        char[][] test5 = {{'a'}};
+        System.out.println(wordSeacher.exist(test5, ""));
+        
+        char[][] test6 = {{'a'}};
+        System.out.println(wordSeacher.exist(test6, "abc"));
+
+        System.out.println();
+        
+        char[][] test7 = {{'a'}, {'b'}, {'c'}};
+        System.out.println(wordSeacher.exist(test7, "abc"));
+
+        char[][] test8 = {{'a', 'b', 'c'}};
+        System.out.println(wordSeacher.exist(test8, "abcba"));
+        
+        char[][] test9 = {{'a', 'b', 'c', 'e'},
+                        {'s', 'f', 'c', 's'},
+                        {'a', 'd', 'e', 'e'}};
+        System.out.println(wordSeacher.exist(test9, "abcced"));
+        System.out.println(wordSeacher.exist(test9, "see"));
+        System.out.println(wordSeacher.exist(test9, "abcb"));
+        
+        System.out.println();
+        
+        char[][] test10 = {{'a', 'b', 'c', 'e'},
+                        {'s', 'f', 'e', 's'},
+                        {'a', 'd', 'e', 'e'}};
+        System.out.println(wordSeacher.exist(test10, "abceseeefs")); // wrong answer
+        
+        char[][] test11 = {{'c', 'e'},
                         {'e', 's'},
                         {'e', 'e'}};
-        System.out.println(wordSeacher.exist(test10, "ceseee")); // wrong answer
+        System.out.println(wordSeacher.exist(test11, "ceseee")); // wrong answer
     }
     
     public boolean exist(char[][] board, String word) {
@@ -83,32 +92,31 @@ public class WordSeacher {
         if (board[i][j] != word.charAt(wordIndex)) {
             return false;
         }
-        
+
+        // Remember to add current char before going down to subproblems
         solutionChars.add(generateKey(i, j));
         boolean subResult = exist(board, word, wordIndex+1, i+1, j, solutionChars);
         if (subResult) {
-            solutionChars.add(generateKey(i, j));
             return true;
         }
         
         subResult = exist(board, word, wordIndex+1, i-1, j, solutionChars);
         if (subResult) {
-            solutionChars.add(generateKey(i, j));
             return true;
         }
         
         subResult = exist(board, word, wordIndex+1, i, j+1, solutionChars);
         if (subResult) {
-            solutionChars.add(generateKey(i, j));
             return true;
         }
         
         subResult = exist(board, word, wordIndex+1, i, j-1, solutionChars);
         if (subResult) {
-            solutionChars.add(generateKey(i, j));
             return true;
         }
         
+        // Remember to remove current char if it does not work out
+        solutionChars.remove(generateKey(i, j));
         return false;
     }
     
