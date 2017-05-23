@@ -3,6 +3,8 @@ package com.weihua.leetcode;
 // Remember to consider overflow.  check java source code Integer.parseInt() for reference
 public class StringToInteger {
     public static void main(String[] args) {
+        //+/-, invalid char, Max value, min value
+
         StringToInteger parser = new StringToInteger();
         //        System.out.println(parser.parse(null));
         //        System.out.println(parser.parse(""));

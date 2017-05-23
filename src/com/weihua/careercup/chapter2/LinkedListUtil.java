@@ -2,6 +2,8 @@ package com.weihua.careercup.chapter2;
 
 import java.util.Random;
 
+import com.weihua.leetcode.ListNode;
+
 public final class LinkedListUtil {
 
     public static Node create() {
@@ -102,6 +104,15 @@ public final class LinkedListUtil {
         while(current != null) {
             System.out.print(current.getValue() + " ");
             current = current.getNext();
+        }
+        System.out.println();
+    }
+    
+    public static void printLinkedListLeetCode(ListNode head) {
+        ListNode current = head;
+        while(current != null) {
+            System.out.print(current.val + " ");
+            current = current.next;
         }
         System.out.println();
     }
