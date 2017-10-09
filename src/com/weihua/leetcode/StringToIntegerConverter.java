@@ -1,11 +1,24 @@
 package com.weihua.leetcode;
 
 // Remember to consider overflow.  check java source code Integer.parseInt() for reference
-public class StringToInteger {
+/*
+null, empty NumberFormatException?
+start with +/-
+contains invalid chars, i.e., not 0-9 or +/-, NumberFormatException?
+start with space OK? trim
+parse as much as possible and digard left if invalid char?
+if valid:
+if +, then positive. If -, then times -1
+if (charAt(i) >= '0' && ,+ '9'
+result * 10 + charAt(i)- '0'
+if overflow.. 2^32.
+ */
+public class StringToIntegerConverter {
     public static void main(String[] args) {
         //+/-, invalid char, Max value, min value
 
-        StringToInteger parser = new StringToInteger();
+        " 1 ".trim();
+        StringToIntegerConverter parser = new StringToIntegerConverter();
         //        System.out.println(parser.parse(null));
         //        System.out.println(parser.parse(""));
         //        System.out.println(parser.parse("  "));
@@ -13,7 +26,9 @@ public class StringToInteger {
 //        System.out.println(parser.parse(" 1"));
 //        System.out.println(parser.parse(" -1"));
 //        System.out.println(parser.parse(" 2147483647"));
-        System.out.println(parser.parse(" -2147483649"));
+        System.out.println(Integer.parseInt("010v"));
+
+
 //        System.out.println(parser.parse(" 2147483648"));
 //        System.out.println(parser.parse(" -2147483648"));
 //        System.out.println(parser.parse(" 12abcd"));

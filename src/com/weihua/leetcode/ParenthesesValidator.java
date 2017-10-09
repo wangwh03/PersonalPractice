@@ -1,37 +1,58 @@
 package com.weihua.leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Stack;
 
 public class ParenthesesValidator {
 
     public static void main(String[] args) {
         ParenthesesValidator validator = new ParenthesesValidator();
-        int[] test = {0,4,3,0};
-        int[] result = validator.twoSum(test, 0);
-        System.out.println(result[0]);
-        System.out.println(result[1]);
+        System.out.println(validator.isValid("["));
+        System.out.println(validator.isValid("]"));
+        System.out.println(validator.isValid("([])"));
+        System.out.println(validator.isValid("([)]"));
     }
-    
-    public int[] twoSum(int[] numbers, int target) throws IllegalArgumentException {
-        int[] resultIndexes = new int[2];
-        HashMap<Integer,Integer> numberMap = new HashMap<Integer,Integer>();
-        for (int i = 0; i < numbers.length; i++) {
-            numberMap.put(numbers[i], i+1);    
-        }
-        
-        for (Map.Entry<Integer, Integer> element : numberMap.entrySet()) {
-            if (numberMap.containsKey(target - element.getKey())) {
-                int index1 = element.getValue();
-                int index2 = numberMap.get(target - element.getKey());
-                
-                resultIndexes[0] = Math.min(index1, index2);
-                resultIndexes[1] = Math.max(index1, index2);
-                return resultIndexes;
+
+    public boolean isValid(String s) {
+        Stack<Character> braceStack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            Character currentChar = s.charAt(i);
+            if (isLeft(currentChar)) {
+                braceStack.push(currentChar);
+            } else if (isRight(currentChar)) {
+                if (!isValid(currentChar, braceStack)) {
+                    return false;
+                }
+            } else {
+                return false;
             }
         }
-        
-        throw new IllegalArgumentException("ah");
+
+        return braceStack.isEmpty();
     }
-        
+
+    private boolean isLeft(Character character) {
+        return character == '(' ||
+                character == '{' ||
+                character == '[';
+    }
+
+    private boolean isRight(Character character) {
+        return character == ')' ||
+                character == '}' ||
+                character == ']';
+    }
+
+
+    private boolean isValid(Character currentRightChar,
+                            Stack<Character> braceStack) {
+        if (braceStack.isEmpty()) {
+            return false;
+        }
+
+        Character currentStackChar = braceStack.pop();
+        return (currentRightChar == ')' && currentStackChar == '(') ||
+                (currentRightChar == ']' && currentStackChar == '[') ||
+                (currentRightChar == '}' && currentStackChar == '{');
+    }
 }
